@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<script	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  
+  <head>
+
+
+     <% include ./head %>
+
+<link rel='stylesheet' href='/stylesheets/style.css' />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+<!-- Loading the AngularJS file from /public/angularJS folder -->
+<script src="angularjs/cart.js"></script>
+       
+  </head>
+   <header>
+      <% include ./header %>
+   </header>
+   
+<body ng-app="cart" ng-controller="cart">
+
+<section class="main-content">				
+				<div class="row">
+					<div class="span9">					
+						<h4 class="title"><span class="text"><strong>Your Cart</strong></span></h4>
+					
+			
+						<% if(values.length=='0'){ %>	
+						<h1 style="color:#FF0000"> Cart is empty </h1>
+						<% } else{ %> 
+						<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+	
+	
+<% for(i in values) { %>
+<div class="column">
+    <div class="col-md-4 ">
+        <div class="col-md-8 well">
+	
+	<img src="<%= values[i].image %> " style="width:150px;height:150px" />
+	<div class="row"><Strong>Item code : </Strong><%- values[i].item_code %> </div>
+ <div class="row"><Strong>Item price : </Strong><%- values[i].price %> </div>
+	<div class="row"><Strong>Gender : </Strong><%- values[i].gender %> </div>
+	<div class="row"><Strong>Style : </Strong><%- values[i].style %> </div>
+	<div class="row"><Strong>Type : </Strong><%- values[i].type %> </div> 
+	<div class="row"><Strong>Items in stock : </Strong><%- values[i].avail_count %> </div>
+	<div class="row"><Strong>Quantity : </Strong><%- values[i].quantity %> </div>  				
+	<div class="col-md-12" style="margin: 10px;">
+					<Strong>Update Quantity: </Strong><br> <input type="text" name="quantity" placeholder="1"
+					ng-model="quantity" ng-value="quantity">
+				</div>
+		<button ng-click="updateQty('<%- values[i].item_code %>');">Update</button>
+		<button ng-click="deleteItem('<%- values[i].item_code %>');">Remove Item</button>
+	
+	
+	
+	
+	    	</div>
+    </div>
+</div>
+ 
+ <% } %> 	
+ 
+ 
+ 
+ 
+		</div>
+	</div>
+</div>
+						<% } %>
+						
+						
+<div class="alert alert-danger" ng-hide="invalid_update">
+						<strong>Update with some value</strong>
+</div>
+
+<div class="alert alert-danger" ng-hide="invalid_delete">
+						<strong>Item removed from cart</strong>
+</div>			
+		
+						
+ <h2><Strong> Total Price : <%- price %></Strong></h2>
+ <h2><Strong> Total Items : <%- quantity %></Strong></h2>
+	
+		<% if(values.length=='0'){ %>	
+						
+						<% } else{ %> 
+						<% if(proceed=='0'){ %>
+						<h3 style="color:#FF0000"><Strong> Quantity of one or more items in the cart exceeds availability </Strong></h3>
+						<% } else{ %> 
+						<div class="container" style="text-align:right;" >
+       <a href="/checkout" class="btn btn-info btn-lg" style="color: #ffffff; background-color: #000000">
+          <span class="glyphicon glyphicon-shopping-cart"></span> Proceed to Checkout
+        </a>
+    </div>
+<% } %> 	 
+ <% } %> 
+	
+					</div>
+				</div>
+</section>
+ 
+
+<div class="container" style="text-align:right;">
+       <a href="/" class="btn btn-info btn-lg" style="color: #ffffff; background-color: #000000">
+          <span class="glyphicon glyphicon-arrow-left"></span> Back
+        </a>
+    </div>
+ 
+</body>
+
+
+</html>
